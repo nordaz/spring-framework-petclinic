@@ -7,13 +7,13 @@ pipeline {
     }
     stages {
        stage('Q/A Analysis (SonarQube)') {
-                   steps {
+           steps {
                        // Analyse statique du code
                        withSonarQubeEnv('SonarQube') {
                            sh "mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar-Dsonar.projectKey=${PROJECT_NAME}"
                        }
                    }
-               }
+
             post {
                 // If Maven was able to run the tests, even if some of the test
                 // failed, record the test results and archive the jar file.
