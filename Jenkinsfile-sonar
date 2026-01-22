@@ -5,6 +5,10 @@ pipeline {
         maven "Maven3.9.12"
         jdk 'Corretto-17'
     }
+    environment {
+        // Configuration générale
+        PROJECT_NAME = "petclinic"
+    }
     stages {
         stage('Q/A Analysis (SonarQube)') {
             steps {
