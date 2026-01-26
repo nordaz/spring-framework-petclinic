@@ -3,25 +3,22 @@ pipeline {
     tools {
         // Install the Maven version configured as "Maven3.9.12" and add it to the path.
         maven "Maven3.9.12"
+    }
 
-    }
-    environment {
-        // On définit le nom du JDK que l'on souhaite utiliser
-        // Ce nom doit correspondre exactement à celui dans "Global Tool Configuration"
-        JDK_NAME = 'jdk21'
-    }
 
     stages {
         stage('Initialize JDK') {
             steps {
-                    script {
-                        // Récupère le chemin d'installation de l'outil nommé 'JDK11'
-                        def jdkPath = tool name: 'Coretto-17', type: 'jdk'
+                script {
+                    // Récupère le chemin d'installation de l'outil nommé 'JDK11'
+                    def jdkPath = tool name: 'Coretto-17', type: 'jdk'
 
-                        // Applique JAVA_HOME uniquement pour ce bloc d'instructions
-                        withEnv(["JAVA_HOME=${jdkPath}", "PATH+JAVA=${jdkPath}/bin"]) {
-                            sh 'mvn clean package'
-                        }
+                    // Applique JAVA_HOME uniquement pour ce bloc d'instructions
+                    withEnv(["JAVA_HOME=${jdkPath}", "PATH+JAVA=${jdkPath}/bin"]) {
+                        sh 'mvn clean package'
                     }
+                }
+            }
+        }
     }
 }
