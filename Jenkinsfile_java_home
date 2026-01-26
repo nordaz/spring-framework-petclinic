@@ -17,7 +17,7 @@ pipeline {
                 script {
                     // 1. Récupération du chemin du JDK via Jenkins Tool
                     def javaPath = tool name: "${JDK_NAME}", type: 'jdk'
-                       sh 'echo "javaPath is: $javaPath"'
+                       sh 'echo "javaPath is: ${javaPath}"'
                     // 2. Injection de JAVA_HOME et mise à jour du PATH
                     withEnv(["JAVA_HOME=${javaPath}", "PATH+JAVA=${javaPath}/bin"]) {
 
