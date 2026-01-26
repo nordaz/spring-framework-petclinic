@@ -3,12 +3,12 @@ pipeline {
     tools {
         // Install the Maven version configured as "Maven3.9.12" and add it to the path.
         maven "Maven3.9.12"
-        jdk 'Corretto-17'
+        jdk 'jdk21'
     }
     environment {
         // On définit le nom du JDK que l'on souhaite utiliser
         // Ce nom doit correspondre exactement à celui dans "Global Tool Configuration"
-        JDK_NAME = 'Corretto-17'
+        JDK_NAME = 'jdk21'
     }
 
     stages {
