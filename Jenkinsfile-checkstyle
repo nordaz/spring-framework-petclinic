@@ -1,0 +1,38 @@
+pipeline {
+    agent any
+    tools {
+        // Install the Maven version configured as "Maven3.9.12" and add it to the path.
+        maven "Maven3.9.12"
+        jdk 'Corretto-17'
+    }
+
+    stages {
+        stage('Build Petclinic') {
+            steps {
+                // This stage seems to be a wrapper or parent stage, but in Declarative Pipeline
+                // you cannot nest stages directly without 'parallel' or 'stages'.
+                // Assuming the user wants a single stage or nested stages.
+                // Based on the indentation, it looks like 'Build Petclinic Checkstyle' is intended to be inside.
+                // However, standard declarative syntax requires 'stages' for nesting.
+                // Let's fix the structure to be valid.
+                script {
+                     // Placeholder if needed
+                }
+            }
+        }
+        // Re-structuring based on likely intent:
+        stage('Build Petclinic Checkstyle') {
+            steps {
+                sh 'mvn clean package checkstyle:checkstyle'
+            }
+            post {
+                // If Maven was able to run the tests, even if some of the test
+                // failed,  record the test results and archive the jar file.
+                success {
+                    junit '**/target/surefire-reports/TEST-*.xml'
+                    archiveArtifacts 'target/*.war'
+                }
+            }
+        }
+    }
+}
