@@ -1,20 +1,21 @@
 pipeline {
     agent any
     tools {
-        // Install the Maven version configured as "Maven3.9.12" and add it to the path.
         maven "Maven3.9.12"
-        jdk 'Corretto-17'
     }
-
     stages {
         stage('Initialize JDK') {
             steps {
-                // Verify the environment
-                sh 'echo "JAVA_HOME=$JAVA_HOME"'
-                sh 'java -version'
+                script {
+                    // Manually resolve and set JAVA_HOME
+                    def javaHome = tool name: 'Corretto-17', type: 'jdk'
 
-                // Run Maven
-                sh 'mvn clean package'
+                    withEnv(["JAVA_HOME=${javaHome}", "PATH+JAVA=${javaHome}/bin"]) {
+                        sh 'echo "JAVA_HOME=$JAVA_HOME"'
+                        sh 'java -version'
+                        sh 'mvn clean package'
+                    }
+                }
             }
         }
     }
