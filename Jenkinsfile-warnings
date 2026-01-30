@@ -5,6 +5,9 @@ pipeline {
         maven "Maven3.9.12"
         jdk 'Corretto-17'
     }
+    options {
+        ansiColor('xterm')
+    }
     stages {
         stage('Build & Analysis') {
             steps {
@@ -31,6 +34,23 @@ pipeline {
                         qualityGates: [[threshold: 10, type: 'TOTAL', unstable: true]]
                     )
                 }
+            }
+        }
+    }
+    post {
+        success {
+            script {
+                echo "\033[32mBuild Successful!\033[0m"
+            }
+        }
+        unstable {
+            script {
+                echo "\033[33mBuild Unstable - Check Warnings!\033[0m"
+            }
+        }
+        failure {
+            script {
+                echo "\033[31mBuild Failed!\033[0m"
             }
         }
     }
