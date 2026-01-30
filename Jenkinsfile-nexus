@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    tools {
+        // Install the Maven  version configured as "Maven3.9.12" and add it to the path.
+        maven "Maven3.9.12"
+        jdk 'Corretto-17'
+    }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
+        stage('Nexus') {
+            steps {
+                nexusPublisher nexusInstanceId: 'Nexus',
+                nexusRepositoryId: 'maven-releases',
+                packages: [
+                    [$class: 'MavenPackage',
+                        mavenAssetList: [
+                            [classifier: '', extension: 'war', filePath: 'target/petclinic.war']
+                        ],
+                        mavenCoordinate: [
+                            artifactId: 'spring-framework-petclinic',
+                            groupId: 'org.springframework.samples',
+                            packaging: 'war',
+                            version: '5.2.4'
+                        ]
+                    ]
+                ]
+            }
+        }
+    }
+}
