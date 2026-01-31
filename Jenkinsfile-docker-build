@@ -9,7 +9,6 @@ pipeline {
         DOCKER_IMAGE = 'petclinic-app'
         CONTAINER_NAME = 'petclinic-container'
         NEXUS_CREDENTIALS = credentials('nexuslogin')
-        GITHUB_CREDENTIALS = credentials('githublogin')
     }
     stages {
         stage('Download Artifact from Nexus') {
@@ -43,15 +42,14 @@ pipeline {
         success {
             script {
                 // Notify GitHub of success
-                // Requires the GitHub plugin to be installed and configured
-                // This updates the commit status
-                updateGitlabCommitStatus name: 'build', state: 'success'
+                // This assumes the GitHub plugin is installed
+                githubNotify description: 'Docker Build Succeeded', status: 'SUCCESS', context: 'jenkins/docker-build'
             }
         }
         failure {
             script {
                 // Notify GitHub of failure
-                updateGitlabCommitStatus name: 'build', state: 'failed'
+                githubNotify description: 'Docker Build Failed', status: 'FAILURE', context: 'jenkins/docker-build'
             }
         }
     }
