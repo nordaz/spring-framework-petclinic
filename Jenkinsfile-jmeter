@@ -16,13 +16,11 @@ pipeline {
     }
      post {
         always {
-            script {
-                logParser{
-                    parsingRulesPath: 'parserules',
-                    useProjectRule: false,
-                    failBuildOnError: false,
-                    unstableOnWarning: true
-                }
+            logParser{
+                parsingRulesPath: 'parserules',
+                useProjectRule: false,
+                failBuildOnError: false,
+                unstableOnWarning: true
             }
         }
      }
