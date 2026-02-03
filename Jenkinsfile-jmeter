@@ -14,4 +14,14 @@ pipeline {
 
         }
     }
+     post {
+        always {
+            logParser{
+                projectRulePath: 'parserules',
+                useProjectRule: false,
+                failBuildOnError: false,
+                unstableOnWarning: true
+            }
+        }
+     }
 }
