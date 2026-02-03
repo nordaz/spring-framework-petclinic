@@ -11,8 +11,8 @@ pipeline {
             }
             steps {
                 sh 'mvn clean package'
-                // Cette commande "sort" le fichier du conteneur avant qu'il ne soit détruit
-                archiveArtifacts artifacts: 'target/*.war', fingerprint: true
+                stash includes:"target/*.war", name: 'petclinic'
+
             }
         }
     }

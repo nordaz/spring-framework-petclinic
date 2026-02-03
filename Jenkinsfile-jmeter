@@ -17,7 +17,7 @@ pipeline {
      post {
         always {
             logParser{
-                projectRulePath: 'parserules',
+                parsingRulesPath: 'parserules',
                 useProjectRule: false,
                 failBuildOnError: false,
                 unstableOnWarning: true
