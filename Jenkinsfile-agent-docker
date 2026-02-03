@@ -11,7 +11,7 @@ pipeline {
             }
             steps {
                 sh 'mvn clean package'
-                stash includes:"target/*.war", name: 'petclinic'
+                stash includes: "target/*.war", name: 'petclinic'
 
             }
         }
