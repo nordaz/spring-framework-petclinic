@@ -33,7 +33,7 @@ pipeline {
                     """
 
                     // Run the new container
-                    sh "docker run --name ${CONTAINER_NAME} -p 30080:8080 ${DOCKER_IMAGE}:${VERSION}"
+                    sh "docker run -d --name ${CONTAINER_NAME} -p 30080:8080 ${DOCKER_IMAGE}:${VERSION}"
                     //app.run("--name ${CONTAINER_NAME} -p 30080:8080")
                 }
             }
